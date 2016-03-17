@@ -1,0 +1,10 @@
+
+State Machine - |main|Controller_FSM:fsm|CS
+Name CS.ST6 CS.ST5 CS.ST4 CS.ST3 CS.ST2 CS.ST1 CS.ST0 
+CS.ST0 0 0 0 0 0 0 0 
+CS.ST1 0 0 0 0 0 1 1 
+CS.ST2 0 0 0 0 1 0 1 
+CS.ST3 0 0 0 1 0 0 1 
+CS.ST4 0 0 1 0 0 0 1 
+CS.ST5 0 1 0 0 0 0 1 
+CS.ST6 1 0 0 0 0 0 1 

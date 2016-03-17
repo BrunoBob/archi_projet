@@ -1,0 +1,113 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
+Slack : -3.877
+TNS   : -115.441
+
+Type  : Slow 1200mV 85C Model Setup 'debouncer:debounc0|s_o'
+Slack : -3.731
+TNS   : -6.835
+
+Type  : Slow 1200mV 85C Model Setup 'SW[0]'
+Slack : -0.612
+TNS   : -1.758
+
+Type  : Slow 1200mV 85C Model Hold 'SW[0]'
+Slack : -0.405
+TNS   : -0.581
+
+Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
+Slack : 0.086
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'debouncer:debounc0|s_o'
+Slack : 1.816
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -53.558
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'debouncer:debounc0|s_o'
+Slack : -1.487
+TNS   : -7.435
+
+Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -3.577
+TNS   : -104.685
+
+Type  : Slow 1200mV 0C Model Setup 'debouncer:debounc0|s_o'
+Slack : -3.197
+TNS   : -5.730
+
+Type  : Slow 1200mV 0C Model Setup 'SW[0]'
+Slack : -0.651
+TNS   : -1.917
+
+Type  : Slow 1200mV 0C Model Hold 'SW[0]'
+Slack : -0.244
+TNS   : -0.325
+
+Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
+Slack : 0.280
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'debouncer:debounc0|s_o'
+Slack : 1.568
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -53.558
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'debouncer:debounc0|s_o'
+Slack : -1.487
+TNS   : -7.435
+
+Type  : Fast 1200mV 0C Model Setup 'debouncer:debounc0|s_o'
+Slack : -1.319
+TNS   : -1.857
+
+Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -1.045
+TNS   : -29.505
+
+Type  : Fast 1200mV 0C Model Setup 'SW[0]'
+Slack : 0.409
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'SW[0]'
+Slack : -0.481
+TNS   : -0.960
+
+Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
+Slack : -0.211
+TNS   : -0.211
+
+Type  : Fast 1200mV 0C Model Hold 'debouncer:debounc0|s_o'
+Slack : 0.891
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -46.922
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'SW[0]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'debouncer:debounc0|s_o'
+Slack : -1.000
+TNS   : -5.000
+
+------------------------------------------------------------
