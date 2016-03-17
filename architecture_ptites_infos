@@ -1,0 +1,19 @@
+=> : flèche vers signal. port map : dans l'autre sens (<=)
+
+Pour une variable, on utilise := pour l'affectation
+
+Pour appeller une proprieté, on utilise ' entre le nom de l'objet et sa proprieté. ex: clk'event.
+
+Il faut déclarer les libraires pour chaque entité (donc au dessus d'une nouvelle entité)
+
+process : instruction concurrente (en même temps) avec d'autres instructions, mais ce qui est à l'intérieur est séquentiel (les uns après les autres). utilisé pour simplifier la description.
+
+Dans process : wait on peut être utilisé plusieurs fois afin d'avoir une séquence de bloquage. Attention, l'instruction wait pour la durée n'est pas synthétisable => pas sur le circuit => juste pour le testbench.
+
+Attention quand on affecte : temps de stabilisation du circuit => les calculs ne sont pas jours à jour. Contrairement aux variables dans les process, qui prennent la valeur automatiquement.
+
+Attention, deux sous-types déclarés comme étant des Types à part entière sont incompatibles, contrairement à si on les défini en tant que simple subType
+
+Attention, la valeur d'un bit est équivalente à un caractère, il faut donc mettre des ' ' autour lorsque l'on fait un if.
+
+
