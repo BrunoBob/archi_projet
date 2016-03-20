@@ -1,3 +1,5 @@
+Codop :
+
 MVI		0000
 MV	 	0001
 STORE	0010
@@ -9,6 +11,8 @@ NOT		0111
 AND		1000
 OR		1001
 
+États :
+
 ST0 => Entrée avec RUN
 ST1 => MVI/STORE
 ST2 => MV
@@ -17,7 +21,7 @@ ST4 => ALU
 ST5 => ALU2
 ST6 => ALU3
 
-Multiplexeur :
+Multiplexeur General:
 
 R0		0000
 R1	 	0001
@@ -30,3 +34,13 @@ R7		0111
 Din		1000
 G		1001
 RStore	1010
+
+
+Multi ALU :
+
+ADD 0100
+SUB 0101
+MULT 0110
+NOT 0111
+AND 1000
+OR 1001
