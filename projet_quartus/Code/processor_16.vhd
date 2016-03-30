@@ -6,24 +6,20 @@ USE ieee.std_logic_1164.all;
 ENTITY processor_16 IS
 		PORT(runp,clkp, resetp : IN STD_LOGIC;
 				Dinp : IN STD_LOGIC_VECTOR(0 to 15);
-				done : OUT STD_LOGIC;
+				donep : OUT STD_LOGIC;
 				busp : OUT STD_LOGIC_VECTOR (0 to 15));
 END ENTITY;
 
 
 ARCHITECTURE Behaviour_processor_16 OF processor_16 IS
 
-COMPONENT debouncer is
-		port(s_i, clk: IN std_logic;
-			s_o: OUT std_logic);
-END COMPONENT;	
-
 COMPONENT Controller_FSM IS
 		PORT(run,clk, reset : IN STD_LOGIC;
 				Ir : IN STD_LOGIC_VECTOR(0 to 15);
 				IRs, Gs, As, Ss : OUT STD_LOGIC;
 				Rs : OUT STD_LOGIC_VECTOR(0 to 7);
-				busSel, aluSel : OUT STD_LOGIC_VECTOR (0 to 3));
+				busSel, aluSel : OUT STD_LOGIC_VECTOR (0 to 3);
+				done : OUT STD_LOGIC);
 END COMPONENT;
 
 COMPONENT flipflop IS
@@ -39,7 +35,18 @@ COMPONENT Multiplexer_General IS
 			s : OUT STD_LOGIC_VECTOR(0 TO 15));
 END COMPONENT;
 
+signal Busg;
+
+signal sFIr : STD_LOGIC_VECTOR(0 to 15);
+
+signal sFA : STD_LOGIC_VECTOR(0 to 15);
+
+signal sFG : STD_LOGIC_VECTOR(0 to 15);
+
+signal sIrsFSM : STD_LOGIC;
 signal sRsFSM : STD_LOGIC_VECTOR(0 to 7);
+signal sAsFSM : STD_LOGIC;
+signal sGsFSM : STD_LOGIC;
 signal sSsFSM : STD_LOGIC;
 signal busSelFSM : STD_LOGIC_VECTOR(0 to 3);
 signal aluSelFSM : STD_LOGIC_VECTOR(0 to 3);
@@ -54,31 +61,32 @@ signal sF6 : STD_LOGIC_VECTOR(0 to 15);
 signal sF7 : STD_LOGIC_VECTOR(0 to 15);
 signal sFStore : STD_LOGIC_VECTOR(0 to 15);
 
+signal sALU : STD_LOGIC_VECTOR(0 to 15);
 
 BEGIN
 
-debounc0 : debouncer PORT MAP (KEY(3), CLOCK_50, so);
+busp <= Busg;
 
--- A rajouter : l'IR
+fIr : flipflop GENERIC MAP (16) PORT MAP (Dinp, sIrsFSM, resetp, clkp, sFIr);
 
--- A rajouter : A
+fA : flipflop GENERIC MAP (16) PORT MAP (Busg, sAsFSM, resetp, clkp, sFA);
 
--- A rajouter : G
+fG : flipflop GENERIC MAP (16) PORT MAP (sALU, sGsFSM, resetp, clkp, sFG);
 
 -- A rajouter : ALU
 
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f0 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(0), resetp, clkp, sF0);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f1 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(1), resetp, clkp, sF1);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f2 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(2), resetp, clkp, sF2);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f3 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(3), resetp, clkp, sF3);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f4 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(4), resetp, clkp, sF4);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f5 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(5), resetp, clkp, sF5);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f6 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(6), resetp, clkp, sF6);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //f7 : flipflop GENERIC MAP (16) PORT MAP (busp,  sRsFSM(7), resetp, clkp, sF7);
--- Ne fonctionne pas, il faut retirer "Reset" des entrées //fstore : flipflop GENERIC MAP (16) PORT MAP (busp,  sSsFSM, resetp, clkp, sFStore);
+f0 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(0), resetp, clkp, sF0);
+f1 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(1), resetp, clkp, sF1);
+f2 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(2), resetp, clkp, sF2);
+f3 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(3), resetp, clkp, sF3);
+f4 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(4), resetp, clkp, sF4);
+f5 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(5), resetp, clkp, sF5);
+f6 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(6), resetp, clkp, sF6);
+f7 : flipflop GENERIC MAP (16) PORT MAP (Busg, sRsFSM(7), resetp, clkp, sF7);
+fstore : flipflop GENERIC MAP (16) PORT MAP (Busg, sSsFSM, resetp, clkp, sFStore);
 
--- Ne peut pas fonctionner sans IR, G et A //fsm : Controller_FSM PORT MAP (runp, clkp, resetp, SortieIR, EntreeIR, EntreeG, EntreeA, sSsFSM, sRsFSM, busSelFSM, aluSelFSM);
+fsm : Controller_FSM PORT MAP (runp, clkp, resetp, sFIr, sIrsFSM, sGsFSM, sAsFSM, sSsFSM, sRsFSM, busSelFSM, aluSelFSM, donep);
 
--- Ne fonctionne pas sans f1, f2, etc. et sans G //multg : Multiplexer_General PORT MAP (f0, f1, f2, f3, f4, f5, f6, f7, Dinp, SortieG, fstore, busSelFSM, busp);
+multg : Multiplexer_General PORT MAP (f0, f1, f2, f3, f4, f5, f6, f7, Dinp, sFG, fstore, busSelFSM, Busg);
  
 END Behaviour_processor_16;

@@ -15,15 +15,24 @@ END main;
 
 ARCHITECTURE Behaviour OF main IS
 
+COMPONENT debouncer is
+		port(s_i, clk: IN std_logic;
+			s_o: OUT std_logic);
+END COMPONENT;	
+
 COMPONENT processor_16 IS
 		PORT(runp,clkp, resetp : IN STD_LOGIC;
 				Dinp : IN STD_LOGIC_VECTOR(0 to 15);
-				done : OUT STD_LOGIC;
+				donep : OUT STD_LOGIC;
 				busp : OUT STD_LOGIC_VECTOR (0 to 15));
 END COMPONENT;
 
+signal so: STD_LOGIC;
+
 BEGIN
 
-proc : processor_16 PORT MAP(SW(17), KEY(0), SW(16), SW(0 to 15), LEDG(0), LEDR(0 to 15));
+debounc : debouncer PORT MAP(KEY(0), CLOCK_50, so);
+
+proc : processor_16 PORT MAP(SW(17), so, SW(16), SW(0 to 15), LEDG(0), LEDR(0 to 15));
  
 END Behaviour;

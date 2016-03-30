@@ -8,7 +8,8 @@ ENTITY Controller_FSM IS
 				Ir : IN STD_LOGIC_VECTOR(0 to 15);
 				IRs, Gs, As, Ss : OUT STD_LOGIC;
 				Rs : OUT STD_LOGIC_VECTOR(0 to 7);
-				busSel, aluSel : OUT STD_LOGIC_VECTOR (0 to 3));
+				busSel, aluSel : OUT STD_LOGIC_VECTOR (0 to 3);
+				done : OUT STD_LOGIC_VECTOR);
 END ENTITY;
 
 ARCHITECTURE Controller_FSM_behaviour OF Controller_FSM IS
@@ -55,6 +56,7 @@ BEGIN
 		Rs<="00000000";
 		busSel<="0000";
 		aluSel<="0000";
+		done <='0'
 		Case CS is
 			When ST0 =>
 				IRs<='1';
