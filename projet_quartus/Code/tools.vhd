@@ -25,11 +25,3 @@ BEGIN
 END behaviour_flipflop;
 
 
---multiplexer générique
-
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-Entity multGen IS
-	Generic( N : positive := 16);
-	PORT(choice : IN ARRAY (0 to n))

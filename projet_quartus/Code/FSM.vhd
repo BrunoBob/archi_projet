@@ -8,7 +8,7 @@ ENTITY Controller_FSM IS
 				Ir : IN STD_LOGIC_VECTOR(0 to 15);
 				IRs, Gs, As, Ss : OUT STD_LOGIC;
 				Rs : OUT STD_LOGIC_VECTOR(0 to 7);
-				busSel, aluSEL : OUT STD_LOGIC_VECTOR (0 to 3));
+				busSel, aluSel : OUT STD_LOGIC_VECTOR (0 to 3));
 END ENTITY;
 
 ARCHITECTURE Controller_FSM_behaviour OF Controller_FSM IS
@@ -54,14 +54,14 @@ BEGIN
 		Ss<='0';
 		Rs<="00000000";
 		busSel<="0000";
-		aluSEL<="0000";
+		aluSel<="0000";
 		Case CS is
 			When ST0 =>
 				IRs<='1';
 			When ST1 =>
 				busSel<="1000";
 				if(Ir(2)='0')then
-					Case IR(4 to 6) is
+					Case Ir(4 to 6) is
 						When "000" =>
 							Rs<="10000000";
 						When "001" =>
@@ -79,17 +79,40 @@ BEGIN
 						When "111" =>
 							Rs<="00000001";
 					end case;
-				elsif(IR(2)='1')then
-					Ss<='1';
+				elsif(Ir(2)='1')then
+					Ss <='1';
 				END IF;
 				
 			when ST2 =>
+				busSel(0)<='0';
+				busSel(1 to 3)<=IR(7 to 9);
+				Case Ir(4 to 6) is
+					When "000" =>
+						Rs<="10000000";
+					When "001" =>
+						Rs<="01000000";
+					When "010" =>
+						Rs<="00100000";
+					When "011" =>
+						Rs<="00010000";
+					When "100" =>
+						Rs<="00001000";
+					When "101" =>
+						Rs<="00000100";
+					When "110" =>
+						Rs<="00000010";
+					When "111" =>
+						Rs<="00000001";
+				end case;
 			
 			when ST3 =>
 				
 			When ST4 =>
 				busSel(0)<='0';
 				busSel(1 to 3)<=IR(4 to 6);
+				
+				aluSel <= Ir(0 TO 3);
+				
 				As<='1';
 			
 			When ST5 =>

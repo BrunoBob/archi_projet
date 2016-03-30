@@ -91,3 +91,29 @@ BEGIN
 	ms(N to (2*N)-1) <= memS(N-1)(1 to N);
 	
 END Behavior_multiplierN;
+
+
+-- Multiplexer ALU
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY multiplexer_ALU IS
+	PORT(code_ALU : IN STD_LOGIC_VECTOR(0 to 3);
+			resAdd, resSub, resMult, resNot, resAnd, resOr : IN STD_LOGIC_VECTOR(0 to 15);
+			resALU : OUT STD_LOGIC_VECTOR(0 to 15));
+END multiplexer_ALU;
+
+ARCHITECTURE behavior_multiplexer_ALU OF multiplexer_ALU IS
+BEGIN
+	With code_ALU select
+		resALU <= 	resAdd when "0100",
+						resSub when "0101",	
+						resMult when "0110",	
+						resNot when "0111",	
+						resAnd when "1000",	
+						resOr when "1001",
+						"0000000000000000" when others;
+		
+		
+END behavior_multiplexer_ALU;

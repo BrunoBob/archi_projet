@@ -38,9 +38,9 @@ RStore	1010
 
 Multi ALU :
 
-ADD 0100
-SUB 0101
-MULT 0110
-NOT 0111
-AND 1000
-OR 1001
+ADD 0100	Entrée 1 du mutliplexer ALU
+SUB 0101	Entrée 2 du mutliplexer ALU
+MULT 0110	Entrée 3 du mutliplexer ALU
+NOT 0111	Entrée 4 du mutliplexer ALU
+AND 1000	Entrée 5 du mutliplexer ALU
+OR 1001		Entrée 6 du mutliplexer ALU
