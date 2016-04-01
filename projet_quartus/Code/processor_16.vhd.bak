@@ -35,7 +35,7 @@ COMPONENT Multiplexer_General IS
 			s : OUT STD_LOGIC_VECTOR(0 TO 15));
 END COMPONENT;
 
-signal Busg : STD_LOGIC_VECTOR(0 to 15);
+signal Busg;
 
 signal sFIr : STD_LOGIC_VECTOR(0 to 15);
 
@@ -87,6 +87,6 @@ fstore : flipflop GENERIC MAP (16) PORT MAP (Busg, sSsFSM, resetp, clkp, sFStore
 
 fsm : Controller_FSM PORT MAP (runp, clkp, resetp, sFIr, sIrsFSM, sGsFSM, sAsFSM, sSsFSM, sRsFSM, busSelFSM, aluSelFSM, donep);
 
---multg : Multiplexer_General PORT MAP (f0, f1, f2, f3, f4, f5, f6, f7, Dinp, sFG, fstore, busSelFSM, Busg);
+multg : Multiplexer_General PORT MAP (f0, f1, f2, f3, f4, f5, f6, f7, Dinp, sFG, fstore, busSelFSM, Busg);
  
 END Behaviour_processor_16;

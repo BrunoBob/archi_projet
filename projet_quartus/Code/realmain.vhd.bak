@@ -1,7 +1,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY realmain IS
+ENTITY main IS
 	PORT( CLOCK_50: IN STD_LOGIC;
 		SW	: IN	STD_LOGIC_VECTOR(0 to 17); -- (Switches)
 		KEY : IN STD_LOGIC_vector(0 to 3); -- clock
@@ -11,9 +11,9 @@ ENTITY realmain IS
 		HEX1 : OUT STD_LOGIC_VECTOR(0 TO 6);
 		HEX4 : OUT STD_LOGIC_VECTOR(0 TO 6);
 		HEX6 : OUT STD_LOGIC_VECTOR(0 TO 6));
-END realmain;
+END main;
 
-ARCHITECTURE Behaviour OF realmain IS
+ARCHITECTURE Behaviour OF main IS
 
 COMPONENT debouncer is
 		port(s_i, clk: IN std_logic;
