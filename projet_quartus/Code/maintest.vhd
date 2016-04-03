@@ -3,7 +3,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY maintest IS
+entity maintest is
 	PORT( CLOCK_50: IN STD_LOGIC;
 		SW	: IN	STD_LOGIC_VECTOR(0 to 17); -- (Switches)
 		KEY : IN STD_LOGIC_vector(0 to 3); -- clock
@@ -30,7 +30,13 @@ END COMPONENT;
 COMPONENT debouncer is
 		port(s_i, clk: IN std_logic;
 			s_o: OUT std_logic);
-END COMPONENT;	
+END COMPONENT;
+
+COMPONENT ALU is
+	PORT(a, b : IN STD_logic_vector(0 to 15);
+    	selAlu : IN STD_logic_vector(0 to 3);
+        resAlu : OUT STD_logic_vector(0 to 15));
+end COMPONENT;
 
 --COMPONENT flipflop IS
 --	Generic( N : positive := 16);
@@ -53,7 +59,7 @@ BEGIN
 --debounc0 : debouncer PORT MAP (KEY(3), CLOCK_50, so);
 --fsm : Controller_FSM PORT MAP (SW(17), so, SW(16), SW(0 to 15), LEDR(0), LEDR(1), LEDR(2), LEDR(3), LEDG(0 to 7), LEDR(5 to 8), LEDR(10 to 13));
 -- ff : flipflop GENERIC MAP (4) PORT MAP (SW(0 to 3), SW(17), SW(16), KEY(3), LEDG(0 to 3));
- fag : Full_Adder_Generique GENERIC MAP (4) PORT MAP (SW(0 to 3), SW(4 to 7), '0', LEDR(0 to 3), LEDG(0));
-
+ --fag : Full_Adder_Generique GENERIC MAP (4) PORT MAP (SW(0 to 3), SW(4 to 7), '0', LEDR(0 to 3), LEDG(0));
+--	myalu : ALU PORT MAP ("0000000000001000", "0000000000001000", sw(0 to 3), ledR(0 to 15));
  
 END Behaviour;

@@ -22,7 +22,7 @@ BEGIN
 	begin
 		Case CS is
 			when ST0 =>
-				if(run='1'  AND (Ir(0 to 3)="0000" OR Ir(0 to 3)="0010")) then
+				if( run='1'  AND (Ir(0 to 3)="0000" OR Ir(0 to 3)="0010")) then
 					NS<=ST1;
 				elsif(run='1' AND Ir(0 to 3)="0001") then
 					NS<=ST2;
@@ -30,6 +30,8 @@ BEGIN
 					NS<=ST3;
 				elsif(run='1' AND (Ir(0 to 3)="0100" OR Ir(0 to 3)="0101" OR Ir(0 to 3)="0110" OR Ir(0 to 3)="0111" OR Ir(0 to 3)="1000" OR Ir(0 to 3)="1001")) then
 					NS<=ST4;
+				elsif(run='0') then
+					NS <= NS;					
 				END if;			
 			when ST1 => NS<=ST0;
 				
@@ -59,6 +61,13 @@ BEGIN
 		done <='0';
 		Case CS is
 			When ST0 =>
+				As<='0';
+				Gs<='0';
+				Ss<='0';
+				Rs<="00000000";
+				busSel<="0000";
+				aluSel<="0000";
+				done <='0';
 				IRs<='1';
 			When ST1 =>
 				busSel<="1000";
@@ -84,7 +93,7 @@ BEGIN
 				elsif(Ir(2)='1')then
 					Ss <='1';
 				END IF;
-				
+				done <= '1';
 			when ST2 =>
 				busSel(0)<='0';
 				busSel(1 to 3)<=IR(7 to 9);
@@ -106,9 +115,11 @@ BEGIN
 					When "111" =>
 						Rs<="00000001";
 				end case;
+				done <= '1';
 			
 			when ST3 =>
-				
+				-- TODO : FAIRE le code pour le LOAD
+				done <= '1';
 			When ST4 =>
 				busSel(0)<='0';
 				busSel(1 to 3)<=IR(4 to 6);
@@ -141,12 +152,13 @@ BEGIN
 						When "111" =>
 							Rs<="00000001";
 				end case;
+				done <= '1';
 		END case;
 	END PROCESS SB;
 	
 	CL : process(clk, reset)
 	begin
-		if1 : IF(clk'event and clk = '1') THEN
+		if1 : IF(RISING_EDGE(clk)) THEN
 			if2 : IF(reset = '0') THEN
 				CS <= ST0;
 			ELSIF(reset = '1') THEN
