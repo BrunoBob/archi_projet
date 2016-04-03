@@ -118,7 +118,8 @@ BEGIN
 				done <= '1';
 			
 			when ST3 =>
-				-- TODO : FAIRE le code pour le LOAD
+				busSel <= "1010";
+				
 				done <= '1';
 			When ST4 =>
 				busSel(0)<='0';
