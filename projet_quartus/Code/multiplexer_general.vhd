@@ -2,9 +2,9 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
 ENTITY Multiplexer_General IS
-	PORT(R0, R1, R2, R3, R4, R5, R6, R7, Din, G, RStore : IN STD_LOGIC_VECTOR (0 TO 15);
-			choice : IN STD_LOGIC_VECTOR(0 TO 3);
-			s : OUT STD_LOGIC_VECTOR(0 TO 15));
+	PORT(R0, R1, R2, R3, R4, R5, R6, R7, Din, G, RStore : IN STD_LOGIC_VECTOR (15 downto 0);
+			choice : IN STD_LOGIC_VECTOR(3 downto 0);
+			s : OUT STD_LOGIC_VECTOR(15 downto 0));
 END Multiplexer_General;
 
 ARCHITECTURE Behaviour_MultiplexerG OF Multiplexer_General IS

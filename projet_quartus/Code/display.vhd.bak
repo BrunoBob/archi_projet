@@ -26,7 +26,7 @@ BEGIN
 					"0110001" when "0011",
 					"1000010" when "1011",
 					"0110000" when "0111",
-					"0111000" when "1111",
+					"0111000" when "1111";
 					"0000000" when others;
 END behavior_segment7;
 

@@ -4,17 +4,60 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ALU is
-	PORT(a, b : IN STD_logic_vector(0 to 15);
-    	selAlu : IN STD_logic_vector(0 to 3);
-        resAlu : OUT STD_logic_vector(0 to 15));
+	PORT(a, b : IN STD_logic_vector(15 downto 0);
+    	selAlu : IN STD_logic_vector(3 downto 0);
+        resAlu : OUT STD_logic_vector(15 downto 0);
+	overflow : OUT std_logic);
 end alu;
 
 architecture behavior_ALU of ALU is
 component multiplexer_ALU IS
 	PORT(code_ALU : IN STD_LOGIC_VECTOR(0 to 3);
 			resAdd, resSub, resMult, resNot, resAnd, resOr : IN STD_LOGIC_VECTOR(0 to 15);
-			resALu : OUT STD_LOGIC_VECTOR(0 to 15));
+			resALU : OUT STD_LOGIC_VECTOR(0 to 15);
+			overFlowPossible : OUT STD_LOGIC);
 END component;
+
+COMPONENT Full_Adder_Generique IS
+	Generic( N : positive := 8);
+	PORT(a, b : IN STD_LOGIC_VECTOR(0 TO N-1);
+			cin : IN STD_LOGIC;
+			s : OUT STD_LOGIC_VECTOR(0 TO N-1);
+			cout : OUT STD_LOGIC);
+END COMPONENT;
+
+COMPONENT multiplier_N IS
+	Generic(N : positive := 4);
+	PORT (ma,mb : IN STD_LOGIC_VECTOR(N-1 DOWNTO 0);
+			over : OUT std_logic;
+			ms : OUT STD_LOGIC_VECTOR(N-1 DOWNTO 0));
+END COMPONENT;
+
+COMPONENT substractor is
+	PORT(a, b : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+		cin : IN STD_LOGIC;
+		s : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+		cout : OUT STD_LOGIC);
+end COMPONENT;
+
+COMPONENT mult_2_2 is
+	port(enta, entb : IN STD_logic_vector(15 downto 0);
+		sel : IN STD_logic;
+		choice : out STD_logic_vector(15 downto 0));
+end COMPONENT;
+
+signal tempAdd, tempSub, tempMult, tempNot, tempAnd, tempOr, tempRes : STD_LOGIC_VECTOR(15 downto 0);
+signal overAdd, overSub, OverMult, isOver, tempOver : std_logic;
+
 begin
-	mult : multiplexer_ALU PORT MAP (selAlu, "0000000000000100", "0000000000000101", "0000000000000110", "0000000000000111", "0000000000001000", "0000000000001001", resAlu);
+	adder : Full_Adder_Generique GENERIC MAP (16) PORT MAP (a, b, '0', tempAdd, overAdd);
+	sub : substractor PORT MAP (a, b, '0', tempSub, overSub);
+	multiplier : multiplier_N GENERIC MAP (16) PORT MAP (a, b, overMult, tempMult);
+	tempNot <= NOT a;
+	tempAnd <= a AND b;
+	tempOr <= a OR b;
+	mult : multiplexer_ALU PORT MAP (selAlu, tempAdd, tempSub, tempMult, tempNot, tempAnd, tempOr, tempRes, isOver);
+	tempOver <= (overAdd OR overSub OR overMult) AND isOver;
+	choiceOver : mult_2_2 PORT MAP (tempRes, "0000000000000000", tempOver, resAlu);
+	overflow <= tempOver ;
 end behavior_ALU;
